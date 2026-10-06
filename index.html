@@ -7,8 +7,8 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  
-  <script src="https://pl31453790.profitableratecpmnetwork.com/99/94/3d/99943d2b6c5f2e859ee8a98ed60253f2.js"></script>
+
+  <script src="https://pl31467926.profitableratecpmnetwork.com/4e/25/e4/4e25e45556a54a50d1c66d2d232b2c61.js"></script>
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shaka-player@4.16.2/dist/controls.css">
   <style>
@@ -30,16 +30,51 @@
       color:var(--text);
     }
 
-    /* ── Scrollbar ── */
     ::-webkit-scrollbar{width:3px}
     ::-webkit-scrollbar-track{background:transparent}
     ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--c1),var(--c3));border-radius:4px}
 
-    /* ── Ambient canvas ── */
     #bg-canvas{
       position:fixed;inset:0;z-index:0;
       pointer-events:none;opacity:.3;
     }
+
+    /* ════════════════════════════════════════════
+       TELEGRAM BADGE (top-left, BIG STYLE)
+    ════════════════════════════════════════════ */
+    #tgBadge {
+      position: fixed;
+      top: max(14px, env(safe-area-inset-top));
+      left: max(14px, env(safe-area-inset-left));
+      z-index: 10001;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 20px;
+      background: linear-gradient(135deg, #1e88e5, #1565c0);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      text-decoration: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      -webkit-tap-highlight-color: transparent;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+    #tgBadge:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 22px rgba(30, 136, 229, 0.55);
+    }
+    #tgBadge:active { transform: scale(0.97); }
+    #tgBadge svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      fill: #fff;
+    }
+    #tgBadge span { white-space: nowrap; }
 
     /* ── Overlay ── */
     #overlay{
@@ -74,10 +109,10 @@
     }
     #loadMsg{color:var(--muted);font-size:12px;font-weight:500;letter-spacing:.5px;text-align:center}
 
-    /* ── Toast ── */
+    /* ── Toast (pushed below the Telegram badge) ── */
     #status{
       position:fixed;
-      top:max(14px,env(safe-area-inset-top));
+      top:calc(max(14px,env(safe-area-inset-top)) + 62px);
       right:max(14px,env(safe-area-inset-right));
       z-index:9997;
       padding:6px 16px;
@@ -98,12 +133,11 @@
       position:fixed;inset:0;z-index:9998;
       background:var(--bg);
       display:none;flex-direction:column;overflow-y:auto;overflow-x:hidden;
-      padding:max(20px,env(safe-area-inset-top)) 16px max(20px,env(safe-area-inset-bottom));
+      padding:max(76px,calc(env(safe-area-inset-top) + 62px)) 16px max(20px,env(safe-area-inset-bottom));
       opacity:0;transition:opacity .4s ease;
     }
     #channel-list.ready{opacity:1}
 
-    /* Header */
     .header{
       display:flex;align-items:center;gap:12px;
       margin-bottom:18px;flex-wrap:wrap;
@@ -142,7 +176,6 @@
       transition:all .3s;
     }
 
-    /* Search */
     #search-wrap{position:relative;margin-bottom:14px}
     #search-input{
       width:100%;padding:11px 40px 11px 42px;
@@ -171,7 +204,6 @@
     #search-clear:hover{background:rgba(255,255,255,.1);color:#ccc}
     #search-clear.on{display:block}
 
-    /* Group pills */
     #grp-bar{
       display:flex;gap:7px;overflow-x:auto;padding:2px 0 14px;
       -webkit-overflow-scrolling:touch;scrollbar-width:none;flex-shrink:0;
@@ -191,21 +223,18 @@
       box-shadow:0 4px 18px rgba(99,102,241,.32);
     }
 
-    /* Grid */
     #ch-grid{
       display:grid;
       grid-template-columns:repeat(auto-fill,minmax(148px,1fr));
       gap:12px;padding-bottom:24px;width:100%;
     }
 
-    /* Card */
     .ch-card{
       background:var(--bg2);border:1px solid var(--border);border-radius:16px;
       padding:16px 12px;cursor:pointer;text-decoration:none;
       display:flex;flex-direction:column;align-items:center;text-align:center;
       gap:9px;min-height:128px;justify-content:center;
       position:relative;overflow:hidden;width:100%;
-      /* stagger-in */
       opacity:0;transform:translateY(14px) scale(.97);
       transition:
         opacity .35s ease,
@@ -214,7 +243,6 @@
         box-shadow .25s;
     }
     .ch-card.in{opacity:1;transform:translateY(0) scale(1)}
-    /* shimmer overlay */
     .ch-card::after{
       content:'';position:absolute;inset:0;border-radius:16px;
       background:linear-gradient(135deg,rgba(255,255,255,.04) 0%,transparent 55%);
@@ -227,18 +255,15 @@
     }
     .ch-card:active{transform:scale(.95)}
 
-    /* top accent */
     .ch-card .acc{
       position:absolute;top:0;left:0;right:0;height:2px;
       border-radius:16px 16px 0 0;opacity:.75;
     }
-    /* group badge */
     .ch-card .grp-badge{
       position:absolute;top:8px;right:8px;
       font-size:7px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;
       padding:2px 7px;border-radius:8px;opacity:.85;
     }
-    /* channel # badge */
     .ch-card .num-badge{
       position:absolute;top:8px;left:8px;
       font-size:7px;font-weight:700;letter-spacing:.3px;
@@ -267,7 +292,6 @@
       overflow:hidden;max-height:30px;width:100%;
     }
 
-    /* No results */
     #no-res{
       display:none;color:var(--muted);text-align:center;
       padding:60px 20px;font-size:13px;width:100%;
@@ -276,7 +300,6 @@
     #no-res .ico{font-size:44px;display:block;margin-bottom:14px}
     @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 
-    /* ── Player ── */
     #pc{
       position:fixed;inset:0;background:#000;display:none;
       align-items:center;justify-content:center;touch-action:manipulation;
@@ -285,7 +308,6 @@
     video.mode-fill{object-fit:fill}
     video.mode-cover{object-fit:cover}
 
-    /* Shaka custom */
     .sp-btn{
       background:transparent!important;border:none!important;
       cursor:pointer!important;padding:0 8px!important;
@@ -309,7 +331,6 @@
       background:rgba(99,102,241,.28)!important;
     }
 
-    /* ── Responsive ── */
     @media(max-width:480px){
       #ch-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:9px}
       .ch-card{min-height:106px;padding:12px 8px;border-radius:13px}
@@ -318,12 +339,17 @@
       .ch-name{font-size:10px}
       .header-text h1{font-size:17px}
       .g-pill{font-size:9px;padding:4px 11px}
+      /* Slightly smaller badge on small screens, still prominent */
+      #tgBadge{padding:9px 15px;font-size:13px;gap:8px}
+      #tgBadge svg{width:17px;height:17px}
     }
     @media(max-width:360px){
       #ch-grid{grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:7px}
       .ch-card{min-height:90px;padding:9px 6px;border-radius:11px}
       .ch-logo{max-height:30px;max-width:64px}
       .ch-ph{width:64px;height:30px;font-size:11px}
+      #tgBadge span{display:none}
+      #tgBadge{padding:9px 12px}
     }
     @media(min-width:768px){
       #ch-grid{grid-template-columns:repeat(auto-fill,minmax(178px,1fr));gap:16px}
@@ -353,10 +379,7 @@
       padding: 20px;
       animation: fadeInPopup 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
-
-    #tgOverlay.show {
-      display: flex;
-    }
+    #tgOverlay.show { display: flex; }
 
     #tgCard {
       width: 100%;
@@ -370,7 +393,6 @@
       position: relative;
       overflow: hidden;
     }
-
     #tgCard::before {
       content: "";
       position: absolute;
@@ -381,7 +403,6 @@
       background: radial-gradient(circle at 30% 20%, rgba(79, 195, 247, 0.04), transparent 60%);
       pointer-events: none;
     }
-
     #tgIcon {
       width: 72px;
       height: 72px;
@@ -395,11 +416,7 @@
       position: relative;
       z-index: 1;
     }
-
-    #tgIcon svg {
-      width: 36px;
-      height: 36px;
-    }
+    #tgIcon svg { width: 36px; height: 36px; }
 
     #tgCard h2 {
       margin: 0 0 8px;
@@ -411,7 +428,6 @@
       z-index: 1;
       letter-spacing: -0.01em;
     }
-
     #tgCard p {
       margin: 0 0 24px;
       color: #8e9baf;
@@ -420,14 +436,12 @@
       position: relative;
       z-index: 1;
     }
-
     .tgBtns {
       display: flex;
       gap: 12px;
       position: relative;
       z-index: 1;
     }
-
     .tgBtn {
       flex: 1;
       height: 48px;
@@ -437,67 +451,38 @@
       cursor: pointer;
       transition: all 0.25s ease;
       border: none;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
       letter-spacing: 0.01em;
     }
-
     #joinNow {
       background: linear-gradient(135deg, #4fc3f7, #2196f3);
       color: #ffffff;
       box-shadow: 0 6px 24px rgba(79, 195, 247, 0.25);
     }
-
     #joinNow:hover {
       transform: translateY(-2px);
       box-shadow: 0 10px 32px rgba(79, 195, 247, 0.35);
     }
-
     #joinedBtn {
       background: rgba(255, 255, 255, 0.05);
       color: #8e9baf;
       border: 1px solid rgba(255, 255, 255, 0.08);
     }
-
     #joinedBtn:hover {
       background: rgba(255, 255, 255, 0.08);
       color: #ffffff;
     }
-
     @keyframes fadeInPopup {
-      from {
-        opacity: 0;
-        transform: scale(0.95) translateY(12px);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-      }
+      from { opacity: 0; transform: scale(0.95) translateY(12px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
     }
-
     @media (max-width: 480px) {
-      #tgCard {
-        padding: 24px 18px 20px;
-        border-radius: 20px;
-      }
-      #tgIcon {
-        width: 60px;
-        height: 60px;
-      }
-      #tgIcon svg {
-        width: 30px;
-        height: 30px;
-      }
-      #tgCard h2 {
-        font-size: 1.2rem;
-      }
-      #tgCard p {
-        font-size: 0.85rem;
-        margin-bottom: 18px;
-      }
-      .tgBtn {
-        height: 42px;
-        font-size: 0.8rem;
-      }
+      #tgCard { padding: 24px 18px 20px; border-radius: 20px; }
+      #tgIcon { width: 60px; height: 60px; }
+      #tgIcon svg { width: 30px; height: 30px; }
+      #tgCard h2 { font-size: 1.2rem; }
+      #tgCard p { font-size: 0.85rem; margin-bottom: 18px; }
+      .tgBtn { height: 42px; font-size: 0.8rem; }
     }
   </style>
 </head>
@@ -505,6 +490,16 @@
 
 <!-- Ambient BG -->
 <canvas id="bg-canvas"></canvas>
+
+<!-- ════════════════════════════════════════════
+     TELEGRAM BADGE (top-left, BIG STYLE)
+════════════════════════════════════════════ -->
+<a id="tgBadge" href="https://t.me/addlist/39J1wWuVQFQ4YTY1" target="_blank" rel="noopener" title="CRICKCAST">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+  </svg>
+  <span>CRICKCAST</span>
+</a>
 
 <!-- Loading overlay -->
 <div id="overlay">
@@ -613,7 +608,7 @@
 /* ════════════════════════════════════════════
    CONFIG / REFS
 ════════════════════════════════════════════ */
-var API="https://sportlink10-playlist.pages.dev/star2.json";
+var API="https://sportlink-playlist.pages.dev/star2.json";
 
 var $overlay   =document.getElementById("overlay");
 var $loadMsg   =document.getElementById("loadMsg");
@@ -725,7 +720,6 @@ function withCookie(u,r){
   return u+(u.indexOf("?")!==-1?"&":"?")+"__hdnea__="+r;
 }
 
-/* ── Parse pipe-separated params ── */
 function parseStreamUrl(raw){
   var res={url:raw,userAgent:null,referer:null,origin:null,cookie:null};
   if(!raw) return res;
@@ -746,9 +740,6 @@ function parseStreamUrl(raw){
   return res;
 }
 
-/* ════════════════════════════════════════════
-   LOAD DATA
-════════════════════════════════════════════ */
 async function loadData(){
   var r=await fetch(API,{cache:"no-store",headers:{Accept:"application/json"}});
   if(!r.ok) throw new Error("HTTP "+r.status);
@@ -763,7 +754,7 @@ async function loadData(){
     var n={
       id:ch.id||'',
       name:ch.name||'Unnamed',
-      stream_url:ch.stream_url||ch.streamUrl||ch.url||ch.link||ch.stream||ch.mpd_url||ch.mpd||ch.manifest||'',
+      stream_url:ch.stream_url||ch.mpd_url||'',
       cookie:ch.cookie||'',
       cookie_expires:ch.cookie_expires||'',
       key_id:ch.key_id||ch.keyId||'',
@@ -777,7 +768,7 @@ async function loadData(){
     if(parsed.referer)   n.referer=parsed.referer;
     if(parsed.origin)    n.origin=parsed.origin;
     if(parsed.cookie&&!n.cookie) n.cookie=parsed.cookie;
-    if(n.stream_url) n.stream_url=n.stream_url.trim();
+    if(n.stream_url) n.stream_url=n.stream_url.replace(/\/\//g,'/').replace(':/',':// ').trim().replace('// ','//');
     var m=n.name.match(/^(\d+)\s/);
     if(m) n.channel_number=m[1];
     return n;
@@ -786,9 +777,6 @@ async function loadData(){
   return{channels:channels};
 }
 
-/* ════════════════════════════════════════════
-   RENDER GROUPS (pills)
-════════════════════════════════════════════ */
 function renderGroups(channels){
   var groups=['All'],seen={};
   channels.forEach(function(ch){ if(ch.group) seen[ch.group]=true; });
@@ -811,9 +799,6 @@ function renderGroups(channels){
   $grpBar.appendChild(f);
 }
 
-/* ════════════════════════════════════════════
-   FILTER + RENDER CARDS
-════════════════════════════════════════════ */
 function applyFilters(){
   var list=allChannels;
   if(curGroup!=='All') list=list.filter(function(c){return c.group===curGroup;});
@@ -840,13 +825,11 @@ function renderCards(list){
 
     var gs=gStyle(ch.group);
 
-    /* accent strip */
     var acc=document.createElement('div');
     acc.className='acc';
     acc.style.background='linear-gradient(90deg,'+gs.strip+')';
     a.appendChild(acc);
 
-    /* group badge */
     if(ch.group&&ch.group!=='General'){
       var gb=document.createElement('span');
       gb.className='grp-badge';
@@ -857,7 +840,6 @@ function renderCards(list){
       a.appendChild(gb);
     }
 
-    /* channel number badge */
     if(ch.channel_number){
       var nb=document.createElement('span');
       nb.className='num-badge';
@@ -865,7 +847,6 @@ function renderCards(list){
       a.appendChild(nb);
     }
 
-    /* logo / placeholder */
     if(ch.logo&&ch.logo.trim()){
       var img=document.createElement('img');
       img.className='ch-logo';
@@ -883,7 +864,6 @@ function renderCards(list){
       a.appendChild(ph);
     }
 
-    /* name */
     var nm=document.createElement('span');
     nm.className='ch-name'; nm.textContent=ch.name;
     a.appendChild(nm);
@@ -896,9 +876,6 @@ function renderCards(list){
   $grid.appendChild(f);
 }
 
-/* ════════════════════════════════════════════
-   RENDER LIST
-════════════════════════════════════════════ */
 function renderList(data){
   allChannels=data.channels||data;
   renderGroups(allChannels);
@@ -910,9 +887,6 @@ function renderList(data){
   hideOverlay();
 }
 
-/* ════════════════════════════════════════════
-   SEARCH
-════════════════════════════════════════════ */
 $sInput.addEventListener('input',function(){
   searchQ=$sInput.value;
   $sClear.classList.toggle('on',searchQ.length>0);
@@ -925,9 +899,6 @@ $sClear.addEventListener('click',function(){
 });
 $sInput.addEventListener('keydown',function(e){ if(e.key==='Escape') $sClear.click(); });
 
-/* ════════════════════════════════════════════
-   PLAYER UTILS
-════════════════════════════════════════════ */
 function errMsg(msg){ setMsg(msg); $overlay.style.display='flex'; toast(msg,'err',0); }
 function shakaErrStr(e){
   if(!e) return"Unknown error";
@@ -1015,9 +986,6 @@ function injectControls(container,vid,player){
   }
 }
 
-/* ════════════════════════════════════════════
-   PLAYER
-════════════════════════════════════════════ */
 async function startPlayer(ch){
   $pc.style.display="flex";
   shaka.polyfill.installAll();
@@ -1033,8 +1001,7 @@ async function startPlayer(ch){
   var cookie=ch.cookie||'';
   if(cookie&&!cookie.startsWith('__hdnea__=')) cookie='__hdnea__='+cookie;
   var raw=rawCookie(cookie);
-  var keyId=ch.key_id||'', key=ch.key||'', url=(ch.stream_url||'').trim();
-  if(!url){ toast("Stream URL missing","err",0); return; }
+  var keyId=ch.key_id||'', key=ch.key||'', url=ch.stream_url||'';
   var restrictionsRelaxed=false;
 
   function buildCfg(){
@@ -1057,19 +1024,14 @@ async function startPlayer(ch){
   }
   player.configure(buildCfg());
 
-  /*
-     Browser-safe stream requests.
-     Do NOT inject Referer/Origin/User-Agent/Cookie headers here: browsers
-     forbid several of these headers and custom headers can trigger a CORS
-     preflight that makes an otherwise playable stream fail with a connection
-     error. For tokenized streams, the supported __hdnea__ value is appended
-     to manifest/segment URLs instead.
-  */
   var T=shaka.net.NetworkingEngine.RequestType;
   player.getNetworkingEngine().registerRequestFilter(function(type,req){
-    if(type===T.MANIFEST||type===T.SEGMENT) {
+    req.headers["Referer"]=ch.referer||"https://www.jiotv.com/";
+    req.headers["User-Agent"]=ch.user_agent||"Mozilla/5.0 (Linux; Android 11; SM-G991B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36";
+    req.headers["Origin"]=ch.origin||"https://www.jiotv.com";
+    if(cookie) req.headers["Cookie"]=cookie;
+    if(type===T.MANIFEST||type===T.SEGMENT)
       req.uris=req.uris.map(function(u){return withCookie(u,raw);});
-    }
   });
 
   var refreshing=false,retries=0,edgeTried=false,lastTry=0,started=false;
@@ -1169,9 +1131,6 @@ async function startPlayer(ch){
   }
 }
 
-/* ════════════════════════════════════════════
-   MAIN
-════════════════════════════════════════════ */
 async function main(){
   var id=getChId(), data;
   try{ setMsg("Fetching channels…"); data=await loadData(); }
@@ -1203,7 +1162,7 @@ document.addEventListener("DOMContentLoaded",main);
 
   // Join Now → open Telegram link, then close
   document.getElementById('joinNow').onclick = function () {
-    window.open('https://t.me/sportlink10', '_blank');
+    window.open('https://t.me/addlist/39J1wWuVQFQ4YTY1', '_blank');
     closePopup();
   };
 
@@ -1228,6 +1187,7 @@ document.addEventListener("DOMContentLoaded",main);
 })();
 </script>
 
-<script src="https://pl31462793.profitableratecpmnetwork.com/d6/4b/36/d64b36bf477d6826fb50d6452488a0a6.js"></script>
+<script src="https://pl31467927.profitableratecpmnetwork.com/f5/ea/dd/f5eadd2d3e0fe1f26f2b1d6c0b7f9167.js"></script>
+
 </body>
 </html>
