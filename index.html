@@ -763,7 +763,7 @@ async function loadData(){
     var n={
       id:ch.id||'',
       name:ch.name||'Unnamed',
-      stream_url:ch.stream_url||ch.mpd_url||'',
+      stream_url:ch.stream_url||ch.streamUrl||ch.url||ch.link||ch.stream||ch.mpd_url||ch.mpd||ch.manifest||'',
       cookie:ch.cookie||'',
       cookie_expires:ch.cookie_expires||'',
       key_id:ch.key_id||ch.keyId||'',
@@ -777,7 +777,7 @@ async function loadData(){
     if(parsed.referer)   n.referer=parsed.referer;
     if(parsed.origin)    n.origin=parsed.origin;
     if(parsed.cookie&&!n.cookie) n.cookie=parsed.cookie;
-    if(n.stream_url) n.stream_url=n.stream_url.replace(/\/\//g,'/').replace(':/',':// ').trim().replace('// ','//');
+    if(n.stream_url) n.stream_url=n.stream_url.trim();
     var m=n.name.match(/^(\d+)\s/);
     if(m) n.channel_number=m[1];
     return n;
@@ -1033,7 +1033,8 @@ async function startPlayer(ch){
   var cookie=ch.cookie||'';
   if(cookie&&!cookie.startsWith('__hdnea__=')) cookie='__hdnea__='+cookie;
   var raw=rawCookie(cookie);
-  var keyId=ch.key_id||'', key=ch.key||'', url=ch.stream_url||'';
+  var keyId=ch.key_id||'', key=ch.key||'', url=(ch.stream_url||'').trim();
+  if(!url){ toast("Stream URL missing","err",0); return; }
   var restrictionsRelaxed=false;
 
   function buildCfg(){
@@ -1056,14 +1057,19 @@ async function startPlayer(ch){
   }
   player.configure(buildCfg());
 
+  /*
+     Browser-safe stream requests.
+     Do NOT inject Referer/Origin/User-Agent/Cookie headers here: browsers
+     forbid several of these headers and custom headers can trigger a CORS
+     preflight that makes an otherwise playable stream fail with a connection
+     error. For tokenized streams, the supported __hdnea__ value is appended
+     to manifest/segment URLs instead.
+  */
   var T=shaka.net.NetworkingEngine.RequestType;
   player.getNetworkingEngine().registerRequestFilter(function(type,req){
-    req.headers["Referer"]=ch.referer||"https://www.jiotv.com/";
-    req.headers["User-Agent"]=ch.user_agent||"Mozilla/5.0 (Linux; Android 11; SM-G991B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36";
-    req.headers["Origin"]=ch.origin||"https://www.jiotv.com";
-    if(cookie) req.headers["Cookie"]=cookie;
-    if(type===T.MANIFEST||type===T.SEGMENT)
+    if(type===T.MANIFEST||type===T.SEGMENT) {
       req.uris=req.uris.map(function(u){return withCookie(u,raw);});
+    }
   });
 
   var refreshing=false,retries=0,edgeTried=false,lastTry=0,started=false;
@@ -1197,7 +1203,7 @@ document.addEventListener("DOMContentLoaded",main);
 
   // Join Now → open Telegram link, then close
   document.getElementById('joinNow').onclick = function () {
-    window.open('https://t.me/addlist/39J1wWuVQFQ4YTY1', '_blank');
+    window.open('https://t.me/sportlink10', '_blank');
     closePopup();
   };
 
